@@ -13,25 +13,40 @@ const Header = () => {
   const menuItems = [
     { 
       label: 'Dashboard', path: '/', visibleForAll: true 
+    },
+    {
+      label: "Department Manager Dashboard",
+      path: "/department-manager-dashboard",
+      visibleForRoles: ["Department Manager"],
+    },
+    {
+      label: "Employee  Dashboard",
+      path: "/employees-dashboard",
+      visibleForRoles: ["Employee "],
+    },
+    {
+      label: "Employee Supervisor Dashboard",
+      path: "/employee-supervisor-dashboard",
+      visibleForRoles: ["Employee Supervisor"],
     },    
     { 
       label: 'Profil', path: '/profile', 
       visibleForRoles: ['Administrator', 'HR Manager', 'Department Manager' , 'Employee Supervisor' ,'Employee'] 
     },
     { 
-      label: 'Employee', path: '/employees', visibleForRoles: ['Administrator', 'HR Manager', 'Employee '] 
+      label: 'Employee', path: '/employees', visibleForRoles: ['Administrator', 'HR Manager',] 
     },
     { 
       label: 'Department', path: '/departments', visibleForRoles: ['Administrator', 'Department Manager'] 
     },
     { 
-      label: 'Project', path: '/projects', visibleForRoles: ['Administrator', 'HR Manager', 'Department Manager'] 
+      label: 'Project', path: '/projects', visibleForRoles: ['Administrator', 'HR Manager'] 
     },
     { 
-      label: 'Workson', path: '/workson', visibleForRoles: ['Administrator', 'HR Manager', 'Department Manager'] 
+      label: 'Workson', path: '/workson', visibleForRoles: ['Administrator', 'HR Manager'] 
     },
     { 
-      label: 'Location', path: '/location', visibleForRoles: ['Administrator', 'Department Manager','Employee Supervisor'] 
+      label: 'Location', path: '/location', visibleForRoles: ['Administrator'] 
     },
     { 
       label: 'Login', path: '/login', isAuthenticated: false 

@@ -24,6 +24,10 @@ const getEmployee = async (deptNo) => {
     return await apiClient.get(`/Department/${deptNo}/employees`);
 }
 
+const getSameDepartment = async (params) => {
+    return await apiClient.get("Employee/same-department", {params});
+};
+
 const DepartmentService = {
     getAll,
     get,
@@ -31,6 +35,7 @@ const DepartmentService = {
     update,
     remove,
     getEmployee,
+    getSameDepartment   
 };
     
 export default DepartmentService;

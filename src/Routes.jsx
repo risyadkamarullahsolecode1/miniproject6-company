@@ -12,6 +12,13 @@ import LocationList from "./components/pages/LocationList";
 import Dashboard from "./components/pages/Dashboard";
 import EditEmployee from "./components/pages/EditEmployee";
 import DependentForm from "./components/organisms/DependentForm";
+import DepartmentManagerDashboard from "./components/pages/DepartmentManagerDashboard";
+import EmployeeSupervisorDashboard from "./components/pages/EmployeeSupervisorDashboard";
+import EmployeeProjects from "./components/pages/EmployeeProjects";
+import DependentManagement from "./components/pages/DependentManagement";
+import EmployeeProfiles from "./components/pages/EmployeeProfiles";
+import EmployeeDashboard from "./components/pages/EmployeeDashboard";
+import PublicInformation from "./components/pages/PublicInformation";
 
 export const routers = createBrowserRouter([
     {   
@@ -93,40 +100,82 @@ export const routers = createBrowserRouter([
         },
        ]
      },     
-    {   
-       // {/* Route Khusus Library Manager */}
-       element: <PrivateRoute allowedRoles={['HR Manager']}/>,            
-       children: [
-         {
-           path: "/employees",
-           element: <EmployeesList />,
-         },       
-       ]
+     {
+      element: <PrivateRoute allowedRoles={["Department Manager"]} />,
+      children: [
+        {
+          path: "/department-manager-dashboard",
+          element: <DepartmentManagerDashboard />,
+        },
+        {
+          path: "/departments",
+          element: <DepartmentList />,
+        },
+        {
+          path: "/projects",
+          element: <ProjectsList />,
+        },
+        {
+          path: "/employees",
+          element: <EmployeesList />,
+        },
+        {
+          path: "/employees/:empNo",
+          element: <EmployeeDetails />,
+        },
+      ],
     },
-    {   
-        // {/* Route Khusus Library Manager */}
-        element: <PrivateRoute allowedRoles={['Department Manager']}/>,            
-        children: [
-          {
-            path: "/employees/:empNo",
-            element: <EmployeeDetails />,
-          },       
-        ]
+    // Route for Employee Supervisor
+    {
+      element: <PrivateRoute allowedRoles={["Employee Supervisor"]} />,
+      children: [
+        {
+          path: "/employee-supervisor-dashboard",
+          element: <EmployeeSupervisorDashboard />,
+        },
+        {
+          path: "/employees",
+          element: <EmployeesList />, // Filter to only show supervised employees
+        },
+        {
+          path: "/employees/:empNo",
+          element: <EmployeeDetails />,
+        },
+        {
+          path: "/workson",
+          element: <WorksOnList />,
+        },
+        {
+          path: "/departments",
+          element: <DepartmentList />,
+        },
+        {
+          path: "/projects",
+          element: <ProjectsList />,
+        },
+      ],
     },          
-    {   
-        // {/* Route Khusus Library Manager */}
-        element: <PrivateRoute allowedRoles={['Employee ']}/>,            
-        children: [
-          {
-            path: "/employees/:empNo",
-            element: <EmployeeDetails />,
-          },       
-          {
-            path: "/employees/dependent/:empNo",
-            element: <DependentForm />,
-          },       
-        ]
-    },          
+    {
+      element: <PrivateRoute allowedRoles={['Employee ']} />,
+      children: [
+        {
+          path: "/employee-dashboard",
+          element: <EmployeeDashboard />,
+        },
+        {
+          path: '/employees/profile',
+          element: <EmployeeProfiles />, // View & Update Profile
+        },
+        {
+          path: '/employees/public-info',
+          element: <PublicInformation />, // View Own Projects
+        },
+        {
+          path: '/employees/dependentss',
+          element: <DependentManagement />, // Manage Dependents
+        },
+      ],
+    },            
     {/* Rute Publik */
        element: <Layout />,
        children: [

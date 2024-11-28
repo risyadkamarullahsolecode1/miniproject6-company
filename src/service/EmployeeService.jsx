@@ -1,7 +1,7 @@
 import apiClient from "../axiosConfig";
 
 const getAll = async (params) => {
-    return await apiClient.get("/Employee/view-employee", { params });
+    return await apiClient.get("/Employee", { params });
 };
 
 const get = async (empNo) => {
@@ -40,6 +40,18 @@ const addDependent = async (empNo, data) => {
     }
 };
 
+const addDependentLogin = async (data) => {
+    console.log("Calling API with data:", data); // Log the input data
+    try {
+        const response = await apiClient.post(`/Employee/dependents`, data);
+        console.log("API Response:", response.data); // Log API response
+        return response;
+    } catch (error) {
+        console.error("API Error:", error.response || error.message); // Log error
+        throw error;
+    }
+};
+
 const EmployeeService = {
     getAll,
     get,
@@ -49,6 +61,7 @@ const EmployeeService = {
     search,
     deactivate,
     addDependent,
+    addDependentLogin,
 };
     
 export default EmployeeService;

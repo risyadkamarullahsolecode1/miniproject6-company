@@ -4,8 +4,8 @@ const getAll = async (params) => {
     return await apiClient.get("/Workson", { params });
 };
 
-const get = async (empno, projno) => {
-    return await apiClient.get(`/Workson/${empno}/${projno}`);
+const get = async (empNo, projNo) => {
+    return await apiClient.get(`/Workson/${empNo}/${projNo}`);
 };
 
 const create = async (data) => {
@@ -20,12 +20,17 @@ const remove = async (empno, projno) => {
     return await apiClient.delete(`/Workson/${empno}/${projno}`);
 };
 
+const assignment = async (projNo) => {
+    return await apiClient.get(`/Workson/${projNo}/projects`);
+}
+
 const WorksOnService = {
     getAll,
     get,
     create,
     update,
-    remove
+    remove,
+    assignment
 };
     
 export default WorksOnService;

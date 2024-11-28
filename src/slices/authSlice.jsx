@@ -53,6 +53,19 @@ async (_, thunkAPI) => {
     }
 }
 );
+
+export const refreshToken = createAsyncThunk(
+  'Auth/refresh-token',
+  async (_, { rejectWithValue }) => {
+    try {      
+      const response= await AuthService.refreshToken();
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
   
 const authSlice = createSlice({
 name: 'auth',
@@ -94,7 +107,14 @@ extraReducers: (builder) => {
     // Logout cases
     .addCase(logout.fulfilled, (state) => {
         state.user = null;
-    });
+    })
+    .addCase(refreshToken.fulfilled, (state) => {
+      state.isAuthenticated = true;    
+   })
+   .addCase(refreshToken.rejected, (state) => {
+      state.user = null;
+      state.isAuthenticated = false;    
+   });
 },
 });
 export const { reset } = authSlice.actions;

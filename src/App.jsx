@@ -30,6 +30,13 @@ import Footer from './components/templates/Footer';
 import Login from './components/pages/Login';
 import Profile from './components/pages/Profile';
 import Register from './components/pages/register';
+import EmployeeSupervisorDashboard from './components/pages/EmployeeSupervisorDashboard';
+import DepartmentManagerDashboard from './components/pages/DepartmentManagerDashboard';
+import EmployeeSameDepartment from './components/pages/EmployeeSameDepartment';
+import EmployeeDashboard from './components/pages/EmployeeDashboard';
+import EmployeeProfile from './components/pages/EmployeeProfiles';
+import PublicInformation from './components/pages/PublicInformation';
+import DependentManagement from './components/pages/DependentManagement';
 
 export const queryClient = new QueryClient();
 
@@ -66,6 +73,13 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/employee-supervisor-dashboard" element={<EmployeeSupervisorDashboard />} />
+          <Route path="/department-manager-dashboard" element={<DepartmentManagerDashboard />} />
+          <Route path="/employees/same-department" element={<EmployeeSameDepartment />} />
+          <Route path="/employees-dashboard" element={<EmployeeDashboard />} />
+          <Route path="/employees/profile" element={<EmployeeProfile />} />
+          <Route path="/employees/public-info" element={<PublicInformation />} />
+          <Route path="/employees/dependents" element={<DependentManagement/>} />
         </Routes>
         <Footer/>
     </Router>

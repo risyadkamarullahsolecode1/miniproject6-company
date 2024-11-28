@@ -1,10 +1,13 @@
 import axios from 'axios';
+import { store } from './store';
+import { refreshToken, logout } from './slices/authSlice';
 
 const apiClient = axios.create({
     baseURL: 'https://localhost:7098/api',
     headers: {
         'Content-Type': 'application/json',
     },
+    withCredentials: true,
 });
 
 apiClient.interceptors.request.use((config) => {
@@ -16,15 +19,27 @@ apiClient.interceptors.request.use((config) => {
 });
 
 apiClient.interceptors.response.use(
-  (response) => response,
-  (error) => {
-      if (error.response && error.response.status === 401) {
-          localStorage.removeItem('user');
-          window.location.href = '/login';
-      }
-      return Promise.reject(error);
-  }
-);;
+    (response) => response,
+    async (error) => {
+        const originalRequest = error.config;
+
+        // Jika error 401 dan belum mencoba refresh
+        if (error.response?.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+
+            try {
+                await store.dispatch(refreshToken()).unwrap();
+                // Token baru sudah di-set sebagai cookie oleh server
+                return api(originalRequest);
+            } catch (refreshError) {
+                await store.dispatch(logout());
+                throw refreshError;
+            }
+        }
+
+        return Promise.reject(error);
+    }
+);
   
 
 export default apiClient;

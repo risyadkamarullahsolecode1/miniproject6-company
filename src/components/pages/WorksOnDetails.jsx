@@ -4,14 +4,14 @@ import WorksOnService from '../../service/WorksOnService';
 import { Table, Alert } from 'react-bootstrap';
 
 const WorksOnDetails = () => {
-    const { empno, projno } = useParams();
+    const { projNo } = useParams();
     const [workDetails, setWorkDetails] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchDetails = async () => {
             try {
-                const response = await WorksOnService.get(empno, projno);
+                const response = await WorksOnService.assignment(projNo);
                 setWorkDetails(response.data);
             } catch (err) {
                 setError('Failed to fetch work details.');
@@ -19,7 +19,7 @@ const WorksOnDetails = () => {
         };
 
         fetchDetails();
-    }, [empno, projno]);
+    }, [projNo]);
 
     if (error) return <Alert variant="danger">{error}</Alert>;
 
@@ -31,19 +31,27 @@ const WorksOnDetails = () => {
                     <tbody>
                         <tr>
                             <td>Employee No</td>
-                            <td>{workDetails.empno}</td>
+                            <td>{workDetails.employeeNo}</td>
+                        </tr>
+                        <tr>
+                            <td>Employee Name</td>
+                            <td>{workDetails.employeeName}</td>
                         </tr>
                         <tr>
                             <td>Project No</td>
-                            <td>{workDetails.projno}</td>
+                            <td>{workDetails.projectNo}</td>
+                        </tr>
+                        <tr>
+                            <td>Project Name</td>
+                            <td>{workDetails.projectName}</td>
                         </tr>
                         <tr>
                             <td>Date Worked</td>
-                            <td>{new Date(workDetails.dateworked).toLocaleDateString()}</td>
+                            <td>{new Date(workDetails.dateWorked).toLocaleDateString()}</td>
                         </tr>
                         <tr>
                             <td>Hours Worked</td>
-                            <td>{workDetails.hoursworked}</td>
+                            <td>{workDetails.totalHours}</td>
                         </tr>
                     </tbody>
                 </Table>

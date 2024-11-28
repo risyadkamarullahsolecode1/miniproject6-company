@@ -17,11 +17,18 @@ const register = async (userData) => {
      await apiClient.post(`Auth/logout`);  
      localStorage.removeItem('user');  
   };
+
+  const refreshToken = async () => { 
+    const response = await api.post("/Auth/refresh-token");
+    return response.data;
+  };
+  
   
   const AuthService = {
     register,
     login,
-    logout
+    logout,
+    refreshToken
   };
   
   export default AuthService;
