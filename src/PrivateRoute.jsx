@@ -14,11 +14,10 @@ const PrivateRoute = ({allowedRoles}) => {
       allowedRoles.includes(role)
     ) || false;
   };
-
    
     if (allowedRoles && !hasRequiredRole()) {
     // Redirect ke halaman unauthorized jika role tidak sesuai
-    return <Navigate to="/unauthorized" />;
+    return <Navigate to="/login" />;
   }
  
 

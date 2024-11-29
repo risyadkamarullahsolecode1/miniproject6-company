@@ -108,6 +108,7 @@ extraReducers: (builder) => {
     .addCase(logout.fulfilled, (state) => {
         state.user = null;
     })
+    // refreh token
     .addCase(refreshToken.fulfilled, (state) => {
       state.isAuthenticated = true;    
    })

@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../atoms/Button';
 import { Form } from 'react-bootstrap';
 import DependantService from '../../service/DependantService';
-import EmployeeService from '../../service/EmployeeService';
 
-const DependentForm = ({ onDependentAdded }) => {
+const DependentForm = ({ onDependentAdded, dependentId }) => {
     const navigate = useNavigate();
     const { empNo } = useParams(); // Get employee ID from URL
     const [formData, setFormData] = useState({
@@ -18,9 +16,27 @@ const DependentForm = ({ onDependentAdded }) => {
     });
     const [isSubmitting, setIsSubmitting] = useState(false); // Prevent duplicate submissions
 
-    
-    console.log("empNo from URL:", empNo);
-    
+    // If dependentId exists, load data to edit
+    useEffect(() => {
+        if (dependentId) {
+            const fetchDependentData = async () => {
+                try {
+                    const response = await DependantService.get(dependentId);
+                    setFormData({
+                        name: response.data.dependentName,
+                        sex: response.data.sex,
+                        dob: response.data.dateOfBirth,
+                        relationship: response.data.relationship
+                    });
+                } catch (error) {
+                    console.error('Error fetching dependent data for edit:', error);
+                    toast.error('Failed to load dependent data.');
+                }
+            };
+            fetchDependentData();
+        }
+    }, [dependentId]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -28,7 +44,6 @@ const DependentForm = ({ onDependentAdded }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Submitting form with data:", formData);
     
         if (!empNo) {
             console.error("Missing empNo from URL.");
@@ -37,21 +52,27 @@ const DependentForm = ({ onDependentAdded }) => {
         }
     
         try {
-            console.log("Calling DependentService.addDependent...");
-            await EmployeeService.addDependent(empNo, formData);
-            toast.success("Dependent added successfully!");
-            onDependentAdded(); // Optional callback to refresh data
-            setFormData({ name: "", sex: "", dob: "", relationship: "" });
-            navigate(`/employees/${empNo}`); 
+            setIsSubmitting(true);
+            if (dependentId) {
+                // Update existing dependent
+                await DependantService.update(dependentId, formData);
+                toast.success('Dependent updated successfully!');
+            } else {
+                // Add new dependent
+                await DependantService.create(empNo, formData);
+                toast.success('Dependent added successfully!');
+            }
+            onDependentAdded(); // Refresh parent data
+            setFormData({ name: "", sex: "", dob: "", relationship: "" }); // Reset form
+            navigate(`/employees/${empNo}`); // Navigate back to employee details
         } catch (error) {
-            console.error("Error adding dependent:", error.response || error.message);
-            toast.error(
-                error.response?.data?.message || "Failed to add dependent. Please try again."
-            );
+            console.error('Error submitting form:', error);
+            toast.error('Failed to save dependent. Please try again.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
-    
-    
+
     return (
         <Form onSubmit={handleSubmit}>
             <Form.Group>
@@ -99,13 +120,12 @@ const DependentForm = ({ onDependentAdded }) => {
                 />
             </Form.Group>
             <Button
-                type="submit" // Ensure this is explicitly set
+                type="submit"
                 variant="primary"
-                disabled={isSubmitting} // Disable while submitting
+                disabled={isSubmitting}
             >
-                {isSubmitting ? 'Submitting...' : 'Add Dependent'}
+                {isSubmitting ? 'Submitting...' : dependentId ? 'Update Dependent' : 'Add Dependent'}
             </Button>
-
         </Form>
     );
 };

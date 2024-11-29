@@ -96,11 +96,11 @@ const EmployeesList = () => {
       <ToastContainer />
       <h2>Employees</h2>
 
-      <Link to={`/employees/new`}>
+      {/* <Link to={`/employees/new`}>
           <Button variant="info" size="sm" className="mb-2">
             Add Employee
           </Button>
-        </Link>{' '}
+        </Link>{' '} */}
       {/* Search and Filters */}
       <Row className="mb-3">
         <Col md={6}>

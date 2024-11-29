@@ -52,6 +52,10 @@ const addDependentLogin = async (data) => {
     }
 };
 
+const details = async (params) => {
+    return await apiClient.get('/Employee/details-employee', { params });
+}
+
 const EmployeeService = {
     getAll,
     get,
@@ -62,6 +66,7 @@ const EmployeeService = {
     deactivate,
     addDependent,
     addDependentLogin,
+    details,
 };
     
 export default EmployeeService;

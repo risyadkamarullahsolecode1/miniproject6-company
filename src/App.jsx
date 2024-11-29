@@ -37,6 +37,7 @@ import EmployeeDashboard from './components/pages/EmployeeDashboard';
 import EmployeeProfile from './components/pages/EmployeeProfiles';
 import PublicInformation from './components/pages/PublicInformation';
 import DependentManagement from './components/pages/DependentManagement';
+import EmployeeAssignments from './components/pages/EmployeeAssignments';
 
 export const queryClient = new QueryClient();
 
@@ -80,6 +81,7 @@ function App() {
           <Route path="/employees/profile" element={<EmployeeProfile />} />
           <Route path="/employees/public-info" element={<PublicInformation />} />
           <Route path="/employees/dependents" element={<DependentManagement/>} />
+          <Route path="/employees/assignments" element={<EmployeeAssignments/>} />
         </Routes>
         <Footer/>
     </Router>

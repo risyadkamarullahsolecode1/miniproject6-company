@@ -22,7 +22,7 @@ const Header = () => {
     {
       label: "Employee  Dashboard",
       path: "/employees-dashboard",
-      visibleForRoles: ["Employee "],
+      visibleForRoles: ["Employee"],
     },
     {
       label: "Employee Supervisor Dashboard",
@@ -40,11 +40,17 @@ const Header = () => {
       label: 'Department', path: '/departments', visibleForRoles: ['Administrator', 'Department Manager'] 
     },
     { 
-      label: 'Project', path: '/projects', visibleForRoles: ['Administrator', 'HR Manager'] 
+      label: 'Project', path: '/projects', visibleForRoles: ['Administrator','Department Manager'] 
     },
+    // { 
+    //   label: 'Project Details', path: '/projects/:projNo', visibleForRoles: ['HR Manager'] 
+    // },
     { 
-      label: 'Workson', path: '/workson', visibleForRoles: ['Administrator', 'HR Manager'] 
+      label: 'Workson', path: '/workson', visibleForRoles: ['Administrator','Department Manager'] 
     },
+    // { 
+    //   label: 'Project Details', path: '/projects/:projNo', visibleForRoles: ['Employee'] 
+    // },
     { 
       label: 'Location', path: '/location', visibleForRoles: ['Administrator'] 
     },
@@ -52,7 +58,7 @@ const Header = () => {
       label: 'Login', path: '/login', isAuthenticated: false 
     },
     { 
-      label: 'Register', path: '/register', isAuthenticated: false 
+      label: 'Register', path: '/register', visibleForRoles: ['Administrator']  
     },
     { 
       label: 'Logout'

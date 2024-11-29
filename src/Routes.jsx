@@ -27,12 +27,20 @@ export const routers = createBrowserRouter([
      children: [{
        path: "/profile",
        element: <Profile />,
-     }]
+     },
+     {
+      path: "/",
+      element: <Dashboard />,
+    }
+    ]
     },     
     {   
-     // {/* Route Khusus Librarian */}
      element: <PrivateRoute allowedRoles={['Administrator']}/>,            
      children: [
+       {
+          path: "/register",
+          element: <Register />,
+       },
        {
           path: "/employees",
           element: <EmployeesList />,
@@ -72,7 +80,6 @@ export const routers = createBrowserRouter([
       ]
     },
     {   
-      // {/* Route Khusus Librarian */}
       element: <PrivateRoute allowedRoles={['HR Manager']}/>,            
       children: [
         {
@@ -156,7 +163,7 @@ export const routers = createBrowserRouter([
       ],
     },          
     {
-      element: <PrivateRoute allowedRoles={['Employee ']} />,
+      element: <PrivateRoute allowedRoles={['Employee']} />,
       children: [
         {
           path: "/employee-dashboard",
@@ -171,7 +178,7 @@ export const routers = createBrowserRouter([
           element: <PublicInformation />, // View Own Projects
         },
         {
-          path: '/employees/dependentss',
+          path: '/employees/dependents',
           element: <DependentManagement />, // Manage Dependents
         },
       ],
@@ -179,18 +186,15 @@ export const routers = createBrowserRouter([
     {/* Rute Publik */
        element: <Layout />,
        children: [
-         {
-           path: "/",
-           element: <Dashboard />,
-         },
+         
          {
            path: "/login",
            element: <Login />,
          },
-         {
-            path: "/register",
-            element: <Register />,
-         },
+        //  {
+        //     path: "/register",
+        //     element: <Register />,
+        //  },
          {
            path: "/logout",
            element: <Logout />,
